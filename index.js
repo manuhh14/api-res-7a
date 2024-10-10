@@ -16,31 +16,11 @@ const puerto= 3900;
 app.use(cors());
 app.use(express.json());
 
-// Crear Rutas
-app.get('/prueba', (req, res)=>{
+//Rutas
+const rutas_articulo= require('./routes/ArticuloRutas');
 
-    return res.status(200).send(`
-        <div>
-            <h1>Hola desde la API</h1>
-            <p>Esta es una prueba de la API</p>
-        </div>
-        `)
-});
-
-app.get('/', (req, res)=>{
-    return res.status(200).json([{
-        id: 1,
-        nombre: "Manuel",
-        apellido: "Hernandez Herrera",
-        edad: 31
-    },
-    {
-        id: 2,
-        nombre: "Juan",
-        apellido: "Perez Martinez",
-        edad: 28
-    }]);
-});
+//Usar las rutas
+app.use("/api", rutas_articulo);
 
 //Arrancar el servidor y ecuchar las peticiones
 app.listen(puerto, ()=>{
