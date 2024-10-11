@@ -15,6 +15,8 @@ const puerto= 3900;
 //configurar cors
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 //Rutas
 const rutas_articulo= require('./routes/ArticuloRutas');
