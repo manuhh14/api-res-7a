@@ -59,7 +59,45 @@ const crear = async (req, res)=>{
     }
 };
 
+
+/* Metodo para conseguir articulos */
+const listar = async (req, res) => {
+    // Simular una espera de 5 segundos
+    setTimeout(async () => {
+        try {
+            // Realizar la consulta de los artículos y limitar el número de resultados
+            const articulos = await Articulo.find({}).sort({ fecha: -1 }).exec();
+            
+            // Verificar si no se encontraron artículos
+            if (!articulos || articulos.length === 0) {
+                return res.status(404).json({
+                    status: "Error",
+                    mensaje: "No se encontraron artículos"
+                });
+            }
+
+            // Devolver los artículos encontrados
+            return res.status(200).json({
+                status: "OK",
+                parametro: req.params.ultimos, 
+                contador: articulos.length,
+                articulos: articulos
+            });
+        } catch (error) {
+            // Manejar cualquier error que ocurra
+            console.error("Error al obtener los artículos:", error);
+            return res.status(500).json({
+                status: "Error",
+                mensaje: "Hubo un problema al obtener los artículos"
+            });
+        }
+    }, 1000);
+};
+
+
+
 module.exports = {
     prueba,
-    crear
+    crear,
+    listar
 };
