@@ -94,10 +94,44 @@ const listar = async (req, res) => {
     }, 1000);
 };
 
+const mostratUno = async (req, res)=>{
+
+    try {
+        //Recoger el Id por url 
+        let id = req.params.id;
+
+        //Buscar el articulo por id
+        const articulo = await Articulo.findById(id);
+
+        //si es que no se encuentra el  articulo 
+        if (!articulo){
+            return res.status(404).json({
+                status: 'error',
+                mensaje: 'El articulo no existe'
+            })
+        };
+
+        /// si es que si encuetra el articulo 
+        return res.status(200).json({
+            status:'OK',
+            mensaje: 'Articulo encontrado',
+            articulo: articulo
+        });
+
+
+    } catch (error) {
+        console.log("Error al buscar el articulo")
+        return res.status(500).json({
+            status: 'error',
+            mensaje: 'Hubo un error al buscar el articulo'
+        });
+    }
+};
 
 
 module.exports = {
     prueba,
     crear,
-    listar
+    listar,
+    mostratUno
 };
